@@ -7,7 +7,16 @@
 
   services = {
     openssh.enable = true;
-
+    resolved = {
+      enable = true;
+      extraConfig = ''
+        DNS=45.90.28.0#7f4f42.dns.nextdns.io
+        DNS=2a07:a8c0::#7f4f42.dns.nextdns.io
+        DNS=45.90.30.0#7f4f42.dns.nextdns.io
+        DNS=2a07:a8c1::#7f4f42.dns.nextdns.io
+        DNSOverTLS=yes
+      '';
+    };
     blueman.enable = true;
     xserver = {
       # enable = true;
