@@ -45,6 +45,29 @@
       fileSystems = [ "/" ];
     };
     fstrim.enable = true;
+    samba = {
+      enable = true;
+      settings = {
+        global = {
+          "workgroup" = "WORKGROUP";
+          "server string" = "nixpc";
+          "netbios name" = "nixpc";
+          "security" = "user";
+        };
+        "games" = {
+          "path" = "/home/ch/Games";
+          "browseable" = "yes";
+          "read only" = "no";
+          "guest ok" = "no";
+          "create mask" = "0644";
+          "directory mask" = "0755";
+          "force user" = "ch";
+        };
+      };
+    };
+    samba-wsdd = {
+      enable = true;
+    };
   };
 
   networking = {
@@ -84,11 +107,18 @@
       };
     };
   };
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu = {
-      ovmf.packages = with pkgs; [ OVMFFull.fd ];
-      vhostUserPackages = [ pkgs.virtiofsd ];
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+    libvirtd = {
+      enable = true;
+      qemu = {
+        ovmf.packages = with pkgs; [ OVMFFull.fd ];
+        vhostUserPackages = [ pkgs.virtiofsd ];
+      };
     };
   };
 }
